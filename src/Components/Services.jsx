@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Typography, Box, Button } from "@mui/material";
 import { SiWeightsandbiases } from "react-icons/si";
 import TempleteServices from "../CommonComponents/TempleteServices";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { GrPaint } from "react-icons/gr";
 import { FaIndustry } from "react-icons/fa6";
 import { GiExtraTime } from "react-icons/gi";
@@ -10,13 +10,6 @@ import theme from "../Settings/theme";
 import backgroundImage from "../assets/fonSer.jpg"; 
 
 const Services = () => {
-  const navigate = useNavigate();
-
-  const chandleChangePage = () => {
-    navigate("/Servicios");
-    console.log("debe navegar a el detalle de quienes somos");
-  };
-
   return (
     <Box
       id="Servicios"

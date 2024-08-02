@@ -2,7 +2,6 @@ import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import fenixFooter from "../assets/fenixFooter.png";
 import { Link } from "react-router-dom";
-import rayito from "../assets/RAYITOFUTER.png";
 import mapa from "../assets/mapa.png";
 import { FaFacebookSquare } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa6";
@@ -15,10 +14,13 @@ const FooterFenix = () => {
   return (
     <Box
       id="Quienes"
-      sx={{ display: "flex", position: "relative", background: "#ECECEC" }}
+      sx={{
+        display: "flex",
+        position: "relative",
+        background: theme.palette.background.default,
+        pt: 4,
+      }}
     >
-      
-
       <Grid container>
         <Grid
           item
@@ -28,7 +30,6 @@ const FooterFenix = () => {
           direction="column"
           alignItems="center"
           justifyContent="center"
-         
         >
           <img
             src={fenixFooter}
@@ -165,9 +166,8 @@ const FooterFenix = () => {
         <Grid
           item
           xs={12}
-                  sm={4}
-                  xl={8}
-                  
+          sm={4}
+          
           container
           direction="column"
           alignItems="center"

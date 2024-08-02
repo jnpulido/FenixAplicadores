@@ -1,16 +1,35 @@
-import React from "react";
-import { Link } from "react-scroll";
+import React, { useState } from "react";
+import { Link as ScrollLink } from "react-scroll";
 import { Link as Navigate } from "react-router-dom";
-import { Grid, Typography, Box, Button } from "@mui/material";
-import logo from "../assets/logo.png";
+import {
+  Grid,
+  Typography,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  Button,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
 import { IoHome } from "react-icons/io5";
 import { MdMiscellaneousServices } from "react-icons/md";
 import { RiUserStarFill } from "react-icons/ri";
 import { FaUsersCog } from "react-icons/fa";
-import theme from "../Settings/theme";
+import { RxHamburgerMenu } from "react-icons/rx";
+import logo from "../assets/logo.png";
 
 const Header = () => {
-  const page = [
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const handleDrawerToggle = () => {
+    setDrawerOpen(!drawerOpen);
+  };
+
+  const pages = [
     {
       label: "Inicio",
       link: "Inicio",
@@ -34,36 +53,63 @@ const Header = () => {
   ];
 
   return (
-    <Box
-      component="nav"
-      sx={{
-        position: "fixed",
-        top: 0,
-        width: "100%",
-        backgroundColor: theme.palette.primary.main,
-        p: 1,
-        zIndex: 1100,
-        display: "flex",
-      }}
+    <Grid
+      container
+      justifyContent="space-between"
+      alignItems="center"
+      sx={{ background: theme.palette.primary.main }}
+      p={2}
     >
-      <Grid container alignItems="center" spacing={4}>
-        <Grid item>
-          <Navigate to="/">
-            <img
-              src={logo}
-              alt="Logo"
-              style={{ width: "100px", height: "40px" }}
-            />
-          </Navigate>
-        </Grid>
-        <Grid item xs>
+      <Grid item>
+        <Navigate to="/">
+          <img
+            src={logo}
+            alt="Logo"
+            style={{ width: "100px", height: "40px" }}
+          />
+        </Navigate>
+      </Grid>
+      <Grid item justifyContent="flex-end" alignContent="flex-end">
+        {isMobile ? (
+          <>
+            <IconButton
+              edge="end"
+              color="white"
+              aria-label="menu"
+              onClick={handleDrawerToggle}
+            >
+              <RxHamburgerMenu color={theme.palette.primary.contrastText} />
+            </IconButton>
+            <Drawer
+              anchor="right"
+              open={drawerOpen}
+              onClose={handleDrawerToggle}
+            >
+              <List>
+                {pages.map((item, index) => (
+                  <ListItem button key={index}>
+                    <ScrollLink to={item.link} smooth={true} duration={500}>
+                      <ListItemText
+                        primary={item.label}
+                        color={theme.palette.primary.contrastText}
+                      />
+                    </ScrollLink>
+                  </ListItem>
+                ))}
+                <ListItem button component={Navigate} to="/login">
+                  <ListItemText primary="Iniciar sesión" />
+                </ListItem>
+              </List>
+            </Drawer>
+          </>
+        ) : (
           <Grid
             container
             spacing={2}
             justifyContent="flex-end"
             alignItems="center"
           >
-            {page.map((item, index) => (
+            {pages.map((item, index) => (
               <Grid item key={index}>
                 <Button
                   sx={{
@@ -73,17 +119,14 @@ const Header = () => {
                     },
                   }}
                 >
-                  {
-                    
-                  }
-                  <Link to={item.link} smooth={true} duration={500}>
+                  <ScrollLink to={item.link} smooth={true} duration={500}>
                     <Grid container alignItems="center" spacing={1}>
                       <Grid item>{item.icono}</Grid>
                       <Grid item>
-                        <Typography>{item.label}</Typography>{" "}
+                        <Typography>{item.label}</Typography>
                       </Grid>
                     </Grid>
-                  </Link>
+                  </ScrollLink>
                 </Button>
               </Grid>
             ))}
@@ -98,14 +141,16 @@ const Header = () => {
                     backgroundColor: theme.palette.secondary.hovers,
                   },
                 }}
+                component={Navigate}
+                to="/login"
               >
                 Iniciar sesión
               </Button>
             </Grid>
           </Grid>
-        </Grid>
+        )}
       </Grid>
-    </Box>
+    </Grid>
   );
 };
 
